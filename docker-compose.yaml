@@ -1,7 +1,18 @@
+version: '3.8'
+
 services:
-  web:
-    build: .
+  php-runtime:
+    image: livecodesvip/php-runtime:latest
+    container_name: php-runtime
+    restart: always
     ports:
-      - "${PORT}:5000"
-  redis:
-    image: "redis:alpine"
+      - "5080:80"
+      - "5090:8080"
+    environment:
+      - ADMIN_USER=admin
+      - ADMIN_PASS=123456
+    volumes:
+      - php-runtime_repo:/var/www/repo
+
+volumes:
+  php-runtime_repo:
