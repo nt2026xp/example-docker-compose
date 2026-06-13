@@ -1,18 +1,7 @@
-version: '3.8'
-
 services:
-  php-runtime:
-    image: livecodesvip/php-runtime:latest
-    container_name: php-runtime
+  uhdiptv:
+    image: iptvtop/uhdiptv:latest
+    container_name: uhdiptv
     restart: always
     ports:
-      - "5080:80"
-      - "5090:8080"
-    environment:
-      - ADMIN_USER=admin
-      - ADMIN_PASS=123456
-    volumes:
-      - php-runtime_repo:/var/www/repo
-
-volumes:
-  php-runtime_repo:
+      - "38766:8766"
