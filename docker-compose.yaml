@@ -1,16 +1,11 @@
-services:
-  av3a-assistant:
-    image: youshandefeiyang/av3a-assistant:amd64
-    container_name: av3a-assistant
-    privileged: true
-    restart: unless-stopped
-    ports:
-      - "35442:35442"
+version: '3.8'
 
-  allinone:
-    image: youshandefeiyang/allinone
-    container_name: allinone
-    privileged: true
+services:
+  tms_rust:
+    image: vtwon/tms:latest
+    container_name: tms
     restart: unless-stopped
     ports:
-      - "35455:35455"
+      - "8080:8080"
+    environment:
+      - RUST_LOG=info
