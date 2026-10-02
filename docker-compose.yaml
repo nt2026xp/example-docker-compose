@@ -1,14 +1,1 @@
-services:
-  iptv:
-    image: akiralereal/iptv:latest
-    container_name: iptv
-    init: true                    # 回收 Chromium 僵尸进程
-    ports:
-      - "1905:1905"
-    environment:
-      - mport=1905                # 容器监听端口，与 ports 对应
-      # - mhost=                  # 可选：外部访问地址（如 http://192.168.1.100:1905）
-      # - mpass=                  # 可选：访问密码，设置后访问 http://ip:port/密码/...
-    volumes:
-      - ./data:/iptv/data         # 数据持久化，不挂载则重建容器 / 升级镜像会丢配置
-    restart: always
+
