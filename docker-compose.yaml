@@ -1,14 +1,25 @@
 services:
-  iptv:
-    image: akiralereal/iptv:latest
-    container_name: iptv
-    init: true                    # 回收 Chromium 僵尸进程
-    ports:
-      - "1905:1905"
-    environment:
-      - mport=1905                # 容器监听端口，与 ports 对应
-      # - mhost=                  # 可选：外部访问地址（如 http://192.168.1.100:1905）
-      # - mpass=                  # 可选：访问密码，设置后访问 http://ip:port/密码/...
+  ysp-live:
+    image: ysp-live:9.5
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ysp-live-v9.5
+    restart: unless-stopped
+    network_mode: host
+    dns:
+      - 223.5.5.5     # 阿里 DNS（国内解析极快）
+      - 119.29.29.29  # 腾讯 DNS
+      - 1.1.1.1       # 国际备用
     volumes:
-      - ./data:/iptv/data         # 数据持久化，不挂载则重建容器 / 升级镜像会丢配置
-    restart: always
+      - ./data:/app/data
+    environment:
+      - TZ=Asia/Shanghai
+      - PYTHONUNBUFFERED=1
+      - YSP_DATA_DIR=/app/data
+      - NODE_OPTIONS="--max-old-space-size=256 --optimize-for-size"  # 优化 V8 内存与垃圾回收
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
